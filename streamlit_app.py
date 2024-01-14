@@ -241,6 +241,60 @@ st.title("Gegner Analyse")
 selected_team = st.selectbox(
     "Wähle ein Team", df_kpis.index.get_level_values(1).unique()
 )
+import plotly.graph_objects as go
+
+# Your existing code to create the result_df DataFrame
+
+# Select the rows you want to display as axis
+selected_rows = [
+    "goals_conceded",
+    "shot_statsbomb_xg_conceded",
+    "goals_scored",
+    "shot_statsbomb_xg_scored",
+    "shots",
+    "passes",
+    "pass_accuracy",
+    "possession",
+]
+normalize=[5,5,5,5,30,750,100,1]
+
+# Filter the result_df DataFrame to include only the selected rows
+
+filtered_result_df_mean = df_kpis.xs(selected_team, level=1).mean().loc[selected_rows]
+filtered_result_df_average = df_kpis.mean().loc[selected_rows]
+
+# Create the radar chart
+fig = go.Figure()
+
+fig.add_trace(
+    go.Scatterpolar(
+        r=filtered_result_df_mean.values/normalize,
+        theta=filtered_result_df_mean.index,
+        fill="toself",
+        name="Team Values",
+    )
+)
+
+fig.add_trace(
+    go.Scatterpolar(
+        r=filtered_result_df_average.values/normalize,
+        theta=filtered_result_df_average.index,
+        fill="toself",
+        name="Average",
+    )
+)
+
+
+
+fig.update_layout(
+    polar=dict(radialaxis=dict(visible=True, range=[0, 1])),
+    showlegend=True,
+    title="Radar Chart for Team Values and Average",
+)
+
+# Display the radar chart in Streamlit
+st.plotly_chart(fig)
+
 team_stats = df_kpis.xs(selected_team, level=1).mean()
 average = df_kpis.mean()
 std_dev = df_kpis.std()
