@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "euro2022"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.1"
+statsbombpy = "^1.12.0"
+pandas = "^2.1.4"
+numpy = "^1.26.2"
+plotly = "^5.18.0"
+pre-commit = "^3.6.0"
+ipykernel = "^6.27.1"
+nbformat = "^5.9.2"
+matplotlib = "^3.8.2"
+streamlit = "^1.29.0"
+tornado = "^6.4"
+mplsoccer = "^1.2.2"
+catboost = "^1.2.2"
+shap = "^0.44.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
